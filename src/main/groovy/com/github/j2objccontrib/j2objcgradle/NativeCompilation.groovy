@@ -117,6 +117,25 @@ class NativeCompilation {
                 gccPlatformToolChain.linker.withArguments { List<String> args ->
                     args.addAll(linkerArgs)
                 }
+                gccPlatformToolChain.staticLibArchiver.setExecutable("libtool")
+                gccPlatformToolChain.staticLibArchiver.withArguments { List<String> args ->
+                    args.remove("-rcs")
+                    args.add("-static")
+                    int idx = args.findIndexOf { it.endsWith(".a")}
+                    args.add(idx, "-o")
+
+                    def filelist = project.file("build/tmp/${args.hashCode()}.txt")
+                    def objects = args.findAll { it.endsWith(".o") }
+                    def writer = filelist.newWriter()
+                    objects.each { o ->
+                        writer.write(o)
+                        writer.newLine()
+                    }
+                    writer.close()
+                    args.removeAll(objects)
+                    args.add("-filelist")
+                    args.add("$filelist")
+                }
             }
         })
     }
