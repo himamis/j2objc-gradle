@@ -17,6 +17,7 @@
 package com.github.j2objccontrib.j2objcgradle
 
 import com.github.j2objccontrib.j2objcgradle.tasks.Utils
+import groovy.io.FileType
 import groovy.transform.PackageScope
 import org.gradle.api.Action
 import org.gradle.api.InvalidUserDataException
@@ -117,7 +118,8 @@ class NativeCompilation {
                 gccPlatformToolChain.linker.withArguments { List<String> args ->
                     args.addAll(linkerArgs)
                 }
-                gccPlatformToolChain.staticLibArchiver.setExecutable("libtool")
+                // use the Apple Inc. version of libtool instead of GNU
+                gccPlatformToolChain.staticLibArchiver.setExecutable("/usr/bin/libtool")
                 gccPlatformToolChain.staticLibArchiver.withArguments { List<String> args ->
                     args.remove("-rcs")
                     args.add("-static")

@@ -50,10 +50,13 @@ class XcodeTask extends DefaultTask {
     public static final String podMethodStartRegex = /^\s*((def\s*j2objc_)|(# J2ObjC Gradle Plugin)).*/
     public static final String endRegex = /^\s*end\s*/
 
-    @Input @Optional
+    @Input
     String getXcodeProjectDir() { return J2objcConfig.from(project).xcodeProjectDir }
 
-    boolean isTaskActive() { return getXcodeProjectDir() != null }
+    @Input
+    boolean isTaskActive() {
+        return J2objcConfig.from(project).configureXcode
+    }
 
     @Input
     // List of all dependencies

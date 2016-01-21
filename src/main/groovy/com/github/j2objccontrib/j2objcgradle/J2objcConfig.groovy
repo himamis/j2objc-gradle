@@ -85,6 +85,11 @@ class J2objcConfig {
     boolean skipJ2objcVerification = false;
 
     /**
+     * Specifies whether to include the resources definition in the podspec file.
+     */
+    boolean podspecIncludeResources = true;
+
+    /**
      * Where to assemble generated main libraries.
      * <p/>
      * Defaults to $buildDir/j2objcOutputs
@@ -112,6 +117,14 @@ class J2objcConfig {
      * Defaults to $buildDir/j2objcOutputs/src/test/objc
      */
     String destSrcTestDir = null
+
+    /**
+     * Set to true if this project configures the Xcode project.
+     * <p/>
+     * There should be only one project setting this value, which has
+     * all the dependencies.
+     */
+    boolean configureXcode = false;
 
     // Private helper methods
     // Should use instead of accessing client set 'dest' strings
