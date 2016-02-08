@@ -142,8 +142,8 @@ class PodspecTask extends DefaultTask {
     @VisibleForTesting
     static String genPodspec(String podname, String publicHeadersDir, String resourceDir,
                              String libDirIos, String libDirOsx, String libDirWatchos,
-                             String minIosVersion, String minOsxVersion, String minWatchosVersion,
-                             String libName, String j2objcHome, boolean includeResources) {
+                             String minVersionIos, String minVersionOsx, String minVersionWatchos,
+                             String libName, String j2objcHome) {
 
         // Relative paths for content referenced by CocoaPods
         validatePodspecPath(libDirIos, true)

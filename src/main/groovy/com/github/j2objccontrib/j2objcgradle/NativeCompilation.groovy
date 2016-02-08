@@ -20,6 +20,7 @@ import com.github.j2objccontrib.j2objcgradle.tasks.Utils
 import groovy.io.FileType
 import groovy.transform.PackageScope
 import org.gradle.api.Action
+import org.gradle.api.DefaultTask
 import org.gradle.api.InvalidUserDataException
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
@@ -140,6 +141,18 @@ class NativeCompilation {
                 }
             }
         })
+    }
+
+    // Creates fake tasks to satisfy dependencies for J2objcPlugin.apply(...)
+    // Should only be used as an alternative to NativeComplication.apply(...) when
+    // the Gradle Version is unsupported and no J2ObjC is possible.
+    void applyWhenUnsupported() {
+        project.with {
+            tasks.create(name: 'debugTestJ2objcExecutable', type: DefaultTask)
+            tasks.create(name: 'releaseTestJ2objcExecutable', type: DefaultTask)
+            tasks.create(name: 'j2objcBuildObjcDebug', type: DefaultTask)
+            tasks.create(name: 'j2objcBuildObjcRelease', type: DefaultTask)
+        }
     }
 
     @PackageScope
