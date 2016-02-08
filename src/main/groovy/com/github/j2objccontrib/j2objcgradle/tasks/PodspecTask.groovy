@@ -173,7 +173,7 @@ class PodspecTask extends DefaultTask {
                "  spec.osx.vendored_libraries = '$libDirOsx/lib${libName}.a'\n" +
                "  spec.watchos.vendored_libraries = '$libDirWatchos/lib${libName}.a'\n" +
                "  spec.xcconfig = {\n" +
-               "    'HEADER_SEARCH_PATHS' => '$j2objcHome/include $publicHeadersDir'/**\n" +
+               "    'HEADER_SEARCH_PATHS' => '$j2objcHome/include $publicHeadersDir/**'\n" +
                "  }\n" +
                "  spec.ios.xcconfig = {\n" +
                "    'LIBRARY_SEARCH_PATHS' => '$j2objcHome/lib'\n" +
