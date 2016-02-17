@@ -23,6 +23,7 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.InvalidUserDataException
 import org.gradle.api.Project
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 
@@ -86,8 +87,10 @@ class PodspecTask extends DefaultTask {
     @Input
     String getMinVersionWatchos() { return J2objcConfig.from(project).getMinVersionWatchos() }
 
-    @Input
+    @Input @Optional
     String getXcodeProjectDir() { return J2objcConfig.from(project).xcodeProjectDir }
+
+    boolean isTaskActive() { return getXcodeProjectDir() != null }
 
     @OutputFile
     File getPodspecDebug() {
@@ -101,6 +104,10 @@ class PodspecTask extends DefaultTask {
 
     @TaskAction
     void podspecWrite() {
+        if (!isTaskActive()) {
+            logger.debug("j2obcjPodspec task disabled for ${project.name}")
+            return
+        }
 
         // relative path for header include, relative path for resource include
         File xcodeProjectDirFile = project.file(getXcodeProjectDir())
